@@ -129,3 +129,30 @@ fieldset label {
     font-size: 1.5rem;
   }
 }
+
+/* --- スライダー用のスタイル --- */
+#cost-slider {
+  margin: 20px 5px 10px 5px;
+}
+
+.slider-values {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* noUiSliderのデフォルト色を上書き */
+.noUi-connect {
+  background: #007bff; /* 青色 */
+}
+
+.noUi-handle {
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #007bff;
+  box-shadow: none;
+}
+.noUi-handle:before,
+.noUi-handle:after {
+  display: none; /* ハンドル内の縦線を非表示 */
+}
