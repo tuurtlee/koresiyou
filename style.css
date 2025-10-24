@@ -1,0 +1,91 @@
+/* ページ全体の基本設定 */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans CJK JP", "Yu Gothic", sans-serif;
+  background-color: #f4f7f6; /* 少しグレーがかった背景色 */
+  display: flex; /* 中央揃えのため */
+  flex-direction: column; /* 中央揃えのため */
+  align-items: center; /* 中央揃えのため */
+  justify-content: center; /* 中央揃えのため */
+  min-height: 100vh; /* 画面の高さいっぱいに表示 */
+  margin: 0;
+}
+
+/* h1 (メインタイトル) */
+h1 {
+  color: #333;
+}
+
+/* 提案ボタン */
+#suggest-button {
+  background-color: #007bff; /* 青色 */
+  color: white; /* 文字色を白に */
+  font-size: 1.2rem; /* 文字を少し大きく */
+  padding: 12px 24px; /* ボタンの内側の余白 (上下 左右) */
+  border: none; /* 枠線を消す */
+  border-radius: 8px; /* 角を丸くする */
+  cursor: pointer; /* マウスカーソルを手の形に */
+  transition: background-color 0.2s; /* 色が変わるアニメーション */
+}
+
+/* ボタンにマウスを乗せたときの見た目 */
+#suggest-button:hover {
+  background-color: #0056b3; /* 少し濃い青色に */
+}
+
+/* 結果表示エリア全体 */
+#result-area {
+  margin-top: 30px; /* ボタンとの間に隙間をあける */
+  padding: 20px;
+  background-color: #ffffff; /* 白い背景 */
+  border-radius: 8px; /* 角を丸くする */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 薄い影をつける */
+  width: 80%;
+  max-width: 400px; /* 横幅の最大値を決める */
+  text-align: center; /* 中の文字を中央揃えに */
+}
+
+/* 結果の各項目（<p>タグ） */
+#result-area p {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 10px 0; /* 各項目の上下の余白 */
+}
+
+/* 遊びの名前（一番重要） */
+#result-name {
+  font-size: 1.8rem; /* 特に大きく */
+  font-weight: bold;
+  color: #000;
+}
+
+/* フィルターエリア */
+.filters-container {
+  display: flex; /* 横並びにする */
+  gap: 20px; /* 隙間をあける */
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap; /* 画面が狭いと折り返す */
+}
+
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 15px;
+  min-width: 150px;
+}
+
+fieldset legend {
+  font-weight: bold;
+  padding: 0 5px;
+  color: #333;
+}
+
+fieldset div {
+  margin-bottom: 5px;
+  text-align: left; /* チェックボックスを左揃えに */
+}
+
+fieldset label {
+  margin-left: 5px;
+  cursor: pointer;
+}
