@@ -40,7 +40,7 @@ h1 {
   border-radius: 8px; /* 角を丸くする */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 薄い影をつける */
   width: 80%;
-  max-width: 400px; /* 横幅の最大値を決める */
+  max-width: 500px; /* 横幅の最大値を決める */
   text-align: center; /* 中の文字を中央揃えに */
 }
 
@@ -88,4 +88,44 @@ fieldset div {
 fieldset label {
   margin-left: 5px;
   cursor: pointer;
+}
+
+/* --- スマートフォン対応 (メディアクエリ) --- */
+/* 画面幅が768px以下の場合に適用されます */
+@media (max-width: 768px) {
+  body {
+    /* コンテンツが画面より長くても大丈夫なように
+      中央揃えの設定を調整し、上下に余白を入れます
+    */
+    min-height: auto;
+    justify-content: flex-start; /* 上から詰める */
+    padding: 20px 0;
+  }
+
+  h1 {
+    font-size: 1.8rem; /* タイトルをスマホ用に少し小さく */
+  }
+
+  /* フィルターエリアを画面幅に合わせる */
+  .filters-container {
+    flex-direction: column; /* フィルターを縦積みに変更 */
+    width: 90%; /* 横幅を画面の90%に */
+    gap: 15px;
+  }
+
+  fieldset {
+    min-width: auto; /* PC用の最小幅をリセット */
+    margin: 0;
+  }
+
+  /* 結果エリアを画面幅に合わせる */
+  #result-area {
+    width: 90%;
+    max-width: none; /* PC用の最大幅をリセット */
+  }
+
+  /* 結果の文字サイズをスマホ用に調整 */
+  #result-name {
+    font-size: 1.5rem;
+  }
 }
