@@ -46,8 +46,9 @@ h1 {
   background-color: #5a6268;
 }
 
-/* 結果表示エリア */
+/* 結果表示エリア全体 */
 #result-area {
+  display: none;
   margin-top: 30px;
   padding: 20px;
   background-color: #ffffff;
@@ -62,7 +63,7 @@ h1 {
   color: #555;
   margin: 10px 0;
 }
-#result-name {
+#result-area #result-name {
   font-size: 1.8rem;
   font-weight: bold;
   color: #000;
@@ -104,10 +105,40 @@ fieldset label {
 
 .slider-values {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* アイテム間のスペースを最大にする */
+  align-items: center; /* 垂直方向中央に揃える */
   margin-top: 25px;
   font-size: 0.9rem;
   color: #333;
+}
+
+/* 値表示内の各 span 要素 */
+.slider-values span {
+  /* text-align で寄せる */
+  flex-basis: 48%;
+}
+
+/* 下限値の span (#lower-value) */
+#lower-value {
+  text-align: right; /* 左寄せ */
+  /* ★ 右側にネガティブマージンを設定し、「〜」に近づける */
+  margin-left: -10px;
+}
+
+/* 上限値の span (#upper-value) */
+#upper-value {
+  text-align: left; /* 右寄せ */
+  /* ★ 左側にネガティブマージンを設定し、「〜」に近づける */
+  margin-right: -10px;
+}
+
+/* 「〜」を表示する span (IDがない2番目の要素) */
+.slider-values span:nth-child(2) {
+  text-align: center; /* 中央寄せ */
+  flex-basis: auto; /* 幅をテキスト幅に合わせる */
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 20px; /* 幅を固定して、ネガティブマージンで隠されないようにする */
 }
 
 .slider {

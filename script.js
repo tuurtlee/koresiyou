@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => {
       console.error("データの読み込みに失敗しました:", error);
-      resultName.textContent = "データの読み込みに失敗しました";
+      resultName.innerHTML = "データの読み込みに失敗しました";
     });
 
   // 2. デュアルスライダーを「カテゴリ（インデックス）」で初期化
@@ -85,8 +85,8 @@ function onSliderInput() {
 // スライダーの表示（値とトラック色）を更新する関数
 function updateSliderDisplay(lowerIndex, upperIndex) {
   // 1. 値の表示（span）を更新
-  lowerValue.textContent = costLabels[lowerIndex];
-  upperValue.textContent = costLabels[upperIndex];
+  lowerValue.innerHTML = costLabels[lowerIndex];
+  upperValue.innerHTML = costLabels[upperIndex];
 
   // 2. トラックの色（CSS変数）を更新
   const lowerPercent = (lowerIndex / maxIndex) * 100;
@@ -98,8 +98,14 @@ function updateSliderDisplay(lowerIndex, upperIndex) {
 
 // --- 提案ボタンがクリックされたときの処理 ---
 suggestButton.addEventListener("click", () => {
+  // 結果表示エリアを取得して表示する (初回のみ影響)
+  const resultArea = document.getElementById("result-area");
+  console.log("クリック:", activities);
+  resultArea.style.display = "block";
+  console.log(resultArea.style.display, activities);
+
   if (activities.length === 0) {
-    resultName.textContent = "データ読み込み中...";
+    resultName.innerHTML = "データ読み込み中...";
     return;
   }
 
@@ -129,32 +135,32 @@ suggestButton.addEventListener("click", () => {
 
   // 5. 絞り込んだ結果からランダムに選ぶ
   if (filteredActivities.length === 0) {
-    resultName.textContent = "該当する遊びがありません";
-    resultCost.textContent = "（フィルター条件を変えてみてください）";
-    resultEffort.textContent = "";
+    resultName.innerHTML = "該当する遊びがありません";
+    resultCost.innerHTML = "（フィルター条件を変えてみてください）";
+    resultEffort.innerHTML = "";
   } else {
     const randomIndex = Math.floor(Math.random() * filteredActivities.length);
     const selectedActivity = filteredActivities[randomIndex];
 
-    resultName.textContent = selectedActivity.name;
-    resultCost.textContent = "かかるお金: " + selectedActivity.cost;
-    resultEffort.textContent = "手間: " + selectedActivity.effort;
+    resultName.innerHTML = selectedActivity.name;
+    resultCost.innerHTML = "かかるお金: " + selectedActivity.cost;
+    resultEffort.innerHTML = "手間: " + selectedActivity.effort;
   }
 });
 
 // --- リセットボタンがクリックされたときの処理 ---
 resetButton.addEventListener("click", () => {
-  // 1. 「手間」のチェックボックスをすべて外す
+  // 1. ★ 「手間」のチェックボックスをすべて【チェックする】に変更 ★
   const allEffortCheckboxes = document.querySelectorAll('input[name="effort"]');
   allEffortCheckboxes.forEach((checkbox) => {
-    checkbox.checked = false;
+    checkbox.checked = true; // false から true に変更
   });
 
-  // 2. スライダーを「数百円」から「数千円」に設定
-  const minResetIndex = costLabels.indexOf("数百円"); // 1
-  const maxResetIndex = costLabels.indexOf("数千円"); // 3
+  // 2. ★ スライダーを【初期値（0円〜一万円以上）】に設定 ★
+  const minResetIndex = 0; // "0円" のインデックス
+  const maxResetIndex = maxIndex; // "一万円以上" のインデックス (costLabels.length - 1 と同じ)
 
-  // スライダーの値をインデックス 1 と 3 に設定
+  // スライダーの値をインデックス 0 と maxIndex に設定
   lowerSlider.value = minResetIndex;
   upperSlider.value = maxResetIndex;
 
@@ -162,7 +168,7 @@ resetButton.addEventListener("click", () => {
   updateSliderDisplay(minResetIndex, maxResetIndex);
 
   // 3. 結果表示もリセットする
-  resultName.textContent = "ここに遊びの名前";
-  resultCost.textContent = "ここに かかるお金";
-  resultEffort.textContent = "ここに 手間";
+  resultName.innerHTML = "ここに遊びの名前";
+  resultCost.innerHTML = "ここに かかるお金";
+  resultEffort.innerHTML = "ここに 手間";
 });
