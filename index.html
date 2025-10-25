@@ -4,9 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>いっしょに、コレしよう</title>
+
     <link rel="stylesheet" href="style.css" />
+
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon-180x180.png" />
     <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" />
   </head>
   <body>
@@ -28,12 +31,14 @@
           <label for="effort3">一日かかる</label>
         </div>
       </fieldset>
+
       <fieldset>
         <legend>お金</legend>
         <div id="cost-slider"></div>
         <div class="slider-values"><span id="min-cost-value">0円</span> 〜 <span id="max-cost-value">一万円以上</span></div>
       </fieldset>
     </div>
+
     <button id="suggest-button">遊びを提案！</button>
     <button id="reset-button" class="secondary-button">フィルターをリセット</button>
 
@@ -42,6 +47,7 @@
       <p id="result-cost">ここに かかるお金</p>
       <p id="result-effort">ここに 手間</p>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
     <script src="script.js"></script>
   </body>

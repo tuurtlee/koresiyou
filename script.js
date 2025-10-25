@@ -1,4 +1,3 @@
-// --- HTMLの要素を取得 ---
 const suggestButton = document.getElementById("suggest-button");
 const resultName = document.getElementById("result-name");
 const resultCost = document.getElementById("result-cost");
@@ -14,7 +13,7 @@ const maxCostValue = document.getElementById("max-cost-value");
 let activities = [];
 
 // --- ★ お金のカテゴリを定義 (data.json と一致させる) ★ ---
-const costLabels = ["0円", "数百円", "千円", "数千円", "一万円", "一万円以上"];
+const costLabels = ["0円", "suuhyakuenn", "千円", "suusennenn", "一万円", "一万円以上"];
 
 // --- ページが読み込まれたときの処理 ---
 window.addEventListener("DOMContentLoaded", () => {
@@ -46,7 +45,7 @@ window.addEventListener("DOMContentLoaded", () => {
     },
     // ハンドルを動かしたときに値を表示に反映
     format: {
-      // 数値 (0, 1, 2...) をラベル ("0円", "数百円"...) に変換
+      // 数値 (0, 1, 2...) をラベル ("0円", "suuhyakuenn"...) に変換
       to: (value) => {
         return costLabels[Math.round(value)];
       },
@@ -59,9 +58,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // 3. スライダーの値が変更されたら、横のテキストを更新
   costSlider.noUiSlider.on("update", (values) => {
-    // values にはフォーマットされたラベル (例: "数百円") が入る
+    // values にはフォーマットされたラベル (例: "suuhyakuenn") が入る
     minCostValue.textContent = values[0];
     maxCostValue.textContent = values[1];
+  });
+
+  // 4. ★ 「手間」のチェックボックスをすべてチェックする ★ (← 追加)
+  const allEffortCheckboxes = document.querySelectorAll('input[name="effort"]');
+  allEffortCheckboxes.forEach((checkbox) => {
+    checkbox.checked = true;
   });
 });
 
@@ -81,7 +86,7 @@ suggestButton.addEventListener("click", () => {
   const [minIndex, maxIndex] = costSlider.noUiSlider.get(true);
 
   // 3. ★ 選択されたインデックス範囲の「ラベル配列」を作成 ★
-  // 例: [1, 3] -> ["数百円", "千円", "数千円"]
+  // 例: [1, 3] -> ["suuhyakuenn", "千円", "suusennenn"]
   const selectedCosts = costLabels.slice(minIndex, maxIndex + 1);
 
   // 4. リストを絞り込む
@@ -125,8 +130,15 @@ resetButton.addEventListener("click", () => {
     checkbox.checked = false;
   });
 
-  // 2. ★ スライダーを初期位置（インデックス 0 と 5）に戻す ★
-  costSlider.noUiSlider.set([0, costLabels.length - 1]);
+  // 2. ★ スライダーを「suuhyakuenn」から「suusennenn」に設定 ★ (← 変更)
+
+  // "suuhyakuenn" と "suusennenn" のインデックス番号を探します
+  const minResetIndex = costLabels.indexOf("suuhyakuenn"); // "suuhyakuenn" はインデックス 1
+  const maxResetIndex = costLabels.indexOf("suusennenn"); // "suusennenn" はインデックス 3
+  console.log(maxResetIndex);
+
+  // スライダーの値をインデックス 1 と 3 に設定します
+  costSlider.noUiSlider.set([minResetIndex, maxResetIndex]);
 
   // 3. 結果表示もリセットする
   resultName.textContent = "ここに遊びの名前";

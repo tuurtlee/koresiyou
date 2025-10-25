@@ -32,6 +32,23 @@ h1 {
   background-color: #0056b3; /* 少し濃い青色に */
 }
 
+/* 2番目のボタン (リセットボタン) 用のスタイル */
+.secondary-button {
+  background-color: #6c757d; /* グレー系 */
+  color: white;
+  font-size: 1rem; /* 少し小さく */
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 10px; /* 提案ボタンとの間に隙間をあける */
+}
+
+.secondary-button:hover {
+  background-color: #5a6268; /* 少し濃いグレー */
+}
+
 /* 結果表示エリア全体 */
 #result-area {
   margin-top: 30px; /* ボタンとの間に隙間をあける */
@@ -90,6 +107,33 @@ fieldset label {
   cursor: pointer;
 }
 
+/* --- スライダー用のスタイル --- */
+#cost-slider {
+  margin: 20px 5px 10px 5px;
+}
+
+.slider-values {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* noUiSliderのデフォルト色を上書き */
+.noUi-connect {
+  background: #007bff; /* 青色 */
+}
+
+.noUi-handle {
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #007bff;
+  box-shadow: none;
+}
+.noUi-handle:before,
+.noUi-handle:after {
+  display: none; /* ハンドル内の縦線を非表示 */
+}
+
 /* --- スマートフォン対応 (メディアクエリ) --- */
 /* 画面幅が768px以下の場合に適用されます */
 @media (max-width: 768px) {
@@ -128,31 +172,4 @@ fieldset label {
   #result-name {
     font-size: 1.5rem;
   }
-}
-
-/* --- スライダー用のスタイル --- */
-#cost-slider {
-  margin: 20px 5px 10px 5px;
-}
-
-.slider-values {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #333;
-}
-
-/* noUiSliderのデフォルト色を上書き */
-.noUi-connect {
-  background: #007bff; /* 青色 */
-}
-
-.noUi-handle {
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid #007bff;
-  box-shadow: none;
-}
-.noUi-handle:before,
-.noUi-handle:after {
-  display: none; /* ハンドル内の縦線を非表示 */
 }
