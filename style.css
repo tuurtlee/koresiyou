@@ -97,7 +97,7 @@ fieldset label {
   cursor: pointer;
 }
 
-/* ▼▼▼ このブロックを修正 ▼▼▼ */
+/* デュアルスライダースタイル */
 .slider-fieldset {
   min-width: 250px;
 }
@@ -112,7 +112,7 @@ fieldset label {
 
 .slider {
   position: relative;
-  height: 20px; /* 親の高さ */
+  height: 20px;
   margin-top: 10px;
 
   --track-color: #ddd;
@@ -123,18 +123,17 @@ fieldset label {
 
 .slider input[type="range"] {
   position: absolute;
-  top: 0; /* ★ 修正 */
-  bottom: 0; /* ★ 追加 (上下中央揃えのため) */
+  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 4px; /* トラックの高さ */
-  margin: auto 0; /* ★ 追加 (上下中央揃えのため) */
+  height: 4px;
+  margin: auto 0;
   -webkit-appearance: none;
   appearance: none;
   background: none;
   pointer-events: none;
 }
-/* ▲▲▲ ここまで修正 ▲▲▲ */
 
 #lower-slider {
   z-index: 1; /* 下側 */
@@ -143,25 +142,53 @@ fieldset label {
   z-index: 2; /* 上側 */
 }
 
-.slider input[type="range"]::-webkit-slider-thumb {
+/* ▼▼▼ 下限値 (#lower-slider) の Thumb スタイル (Chrome系) ▼▼▼ */
+#lower-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px; /* Thumb の位置を調整 */
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--range-color); /* 元の青い枠線 */
+  cursor: pointer;
+  pointer-events: auto;
+  position: relative;
+}
+
+/* ▼▼▼ 下限値 (#lower-slider) の Thumb スタイル (Firefox) ▼▼▼ */
+#lower-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--range-color); /* 元の青い枠線 */
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* ▼▼▼ 上限値 (#upper-slider) の Thumb スタイル (Chrome系) - 元のスタイル ▼▼▼ */
+#upper-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background: #fff;
-  border: 2px solid var(--range-color);
+  border: 2px solid var(--range-color); /* 元の青い枠線 */
   cursor: pointer;
   pointer-events: auto;
   position: relative;
 }
 
-.slider input[type="range"]::-moz-range-thumb {
+/* ▼▼▼ 上限値 (#upper-slider) の Thumb スタイル (Firefox) - 元のスタイル ▼▼▼ */
+#upper-slider::-moz-range-thumb {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: #fff;
-  border: 2px solid var(--range-color);
+  border: 2px solid var(--range-color); /* 元の青い枠線 */
   cursor: pointer;
   pointer-events: auto;
 }
