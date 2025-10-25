@@ -10,9 +10,24 @@ body {
   margin: 0;
 }
 
-/* h1 (メインタイトル) */
-h1 {
-  color: #333;
+/* ヘッダー画像の設定 */
+.site-header {
+  width: 100%;
+  /* text-align: center; */
+  margin-bottom: 20px; /* フィルターとの間に隙間を作る */
+  overflow: hidden; /* ★ 枠からはみ出た部分を非表示（トリミング）にする */
+
+  display: flex; /* Flexboxを有効化 */
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* (任意) 垂直方向も中央揃えにする場合 */
+}
+
+.header-image {
+  max-width: 600px; /* 画像が大きくなりすぎないように最大幅を設定 */
+  width: 110%;
+  text-align: center; /* 画像を中央揃えにする */
+  object-fit: cover;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 /* 提案ボタン */
@@ -50,6 +65,7 @@ h1 {
 #result-area {
   display: none;
   margin-top: 30px;
+  margin-bottom: 30px;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -253,12 +269,9 @@ fieldset label {
 /* --- スマートフォン対応 (メディアクエリ) --- */
 @media (max-width: 768px) {
   body {
-    min-height: auto;
-    justify-content: flex-start;
+    /* min-height: 100vh; */
+    justify-content: center;
     padding: 20px 0;
-  }
-  h1 {
-    font-size: 1.8rem;
   }
   .filters-container {
     flex-direction: column;
