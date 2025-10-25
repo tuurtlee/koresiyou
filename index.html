@@ -9,8 +9,6 @@
 
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon-180x180.png" />
     <link rel="icon" type="image/x-icon" href="./favicon.ico" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" />
   </head>
   <body>
     <h1>いっしょに、コレしよう</h1>
@@ -32,10 +30,19 @@
         </div>
       </fieldset>
 
-      <fieldset>
+      <fieldset class="slider-fieldset">
         <legend>お金</legend>
-        <div id="cost-slider"></div>
-        <div class="slider-values"><span id="min-cost-value">0円</span> 〜 <span id="max-cost-value">一万円以上</span></div>
+
+        <div class="slider" id="cost-slider-container">
+          <input type="range" id="lower-slider" />
+          <input type="range" id="upper-slider" />
+        </div>
+
+        <div class="slider-values">
+          <span id="lower-value">0円</span>
+          <span>〜</span>
+          <span id="upper-value">一万円以上</span>
+        </div>
       </fieldset>
     </div>
 
@@ -48,7 +55,6 @@
       <p id="result-effort">ここに 手間</p>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
