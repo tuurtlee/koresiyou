@@ -4,6 +4,7 @@ const resultName = document.getElementById("result-name");
 const resultCost = document.getElementById("result-cost");
 const resultEffort = document.getElementById("result-effort");
 const resetButton = document.getElementById("reset-button");
+const loader = document.getElementById("loader"); // ローダー要素を取得
 
 // --- デュアルスライダー要素 ---
 const sliderContainer = document.getElementById("cost-slider-container");
@@ -14,6 +15,7 @@ const upperValue = document.getElementById("upper-value");
 
 // --- 遊びのリストを格納する変数 (最初は空) ---
 let activities = [];
+let isLoading = false; // ★ 処理中フラグ (連打防止用)
 
 // --- お金のカテゴリを定義 (data.json と一致させる) ---
 const costLabels = ["0円", "数百円", "千円", "数千円", "一万円", "一万円以上"];
@@ -24,7 +26,9 @@ const maxIndex = costLabels.length - 1;
 window.addEventListener("DOMContentLoaded", () => {
   // 1. JSONを読み込む
   fetch("data.json") // もしGitHub Pagesで動かない場合は "./data.json" に
-    .then((response) => (response.ok ? response.json() : Promise.reject(response)))
+    .then((response) =>
+      response.ok ? response.json() : Promise.reject(response)
+    )
     .then((data) => {
       activities = data;
       console.log("JSONデータの読み込み完了:", activities);
@@ -97,78 +101,99 @@ function updateSliderDisplay(lowerIndex, upperIndex) {
 }
 
 // --- 提案ボタンがクリックされたときの処理 ---
-suggestButton.addEventListener("click", () => {
-  // 結果表示エリアを取得して表示する (初回のみ影響)
+suggestButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  // ★ 処理中なら何もしない (連打防止) ★
+  if (isLoading) {
+    return;
+  }
+
   const resultArea = document.getElementById("result-area");
-  console.log("クリック:", activities);
-  resultArea.style.display = "block";
-  console.log(resultArea.style.display, activities);
 
   if (activities.length === 0) {
     resultName.innerHTML = "データ読み込み中...";
     return;
   }
 
-  // 1. チェックされた「手間」の値を取得
-  const checkedEffortBoxes = document.querySelectorAll('input[name="effort"]:checked');
-  const selectedEfforts = Array.from(checkedEffortBoxes).map((box) => box.value);
+  // ▼▼▼ ローディング処理 ▼▼▼
+  // 1. 前の結果をクリア & ローダーを表示
+  resultName.innerHTML = "";
+  resultCost.innerHTML = "";
+  resultEffort.innerHTML = "";
+  loader.style.display = "block";
 
-  // 2. スライダーの「お金」の「インデックス」を取得
-  const minIndex = parseInt(lowerSlider.value);
-  const maxIndex = parseInt(upperSlider.value);
+  // 2. ローディング中はボタンを無効化 & フラグを立てる
+  suggestButton.disabled = true;
+  resetButton.disabled = true;
+  isLoading = true; // ★ フラグを true に設定 ★
 
-  // 3. 選択されたインデックス範囲の「ラベル配列」を作成
-  const selectedCosts = costLabels.slice(minIndex, maxIndex + 1);
+  // 3. アニメーションを待つ (例: 1500ms = 1.5秒)
+  setTimeout(() => {
+    // 4. ローダーを非表示 & ボタンを有効化
+    loader.style.display = "none";
+    suggestButton.disabled = false;
+    resetButton.disabled = false;
 
-  // 4. リストを絞り込む
-  let filteredActivities = activities;
+    // 5. 絞り込みを実行して結果を表示 (既存のロジック)
+    const checkedEffortBoxes = document.querySelectorAll(
+      'input[name="effort"]:checked'
+    );
+    const selectedEfforts = Array.from(checkedEffortBoxes).map(
+      (box) => box.value
+    );
 
-  if (selectedEfforts.length > 0) {
+    const minIndex = parseInt(lowerSlider.value);
+    const maxIndex = parseInt(upperSlider.value);
+    const selectedCosts = costLabels.slice(minIndex, maxIndex + 1);
+
+    let filteredActivities = activities;
+    if (selectedEfforts.length > 0) {
+      filteredActivities = filteredActivities.filter((activity) => {
+        return selectedEfforts.includes(activity.effort);
+      });
+    }
     filteredActivities = filteredActivities.filter((activity) => {
-      return selectedEfforts.includes(activity.effort);
+      return selectedCosts.includes(activity.cost);
     });
-  }
 
-  filteredActivities = filteredActivities.filter((activity) => {
-    return selectedCosts.includes(activity.cost);
-  });
+    if (filteredActivities.length === 0) {
+      resultName.innerHTML = "該当する遊びがありません";
+      resultCost.innerHTML = "（フィルター条件を変えてみてください）";
+      resultEffort.innerHTML = "";
+    } else {
+      const randomIndex = Math.floor(Math.random() * filteredActivities.length);
+      const selectedActivity = filteredActivities[randomIndex];
 
-  // 5. 絞り込んだ結果からランダムに選ぶ
-  if (filteredActivities.length === 0) {
-    resultName.innerHTML = "該当する遊びがありません";
-    resultCost.innerHTML = "（フィルター条件を変えてみてください）";
-    resultEffort.innerHTML = "";
-  } else {
-    const randomIndex = Math.floor(Math.random() * filteredActivities.length);
-    const selectedActivity = filteredActivities[randomIndex];
+      resultName.innerHTML = selectedActivity.name;
+      resultCost.innerHTML = "かかるお金: " + selectedActivity.cost;
+      resultEffort.innerHTML = "手間: " + selectedActivity.effort;
+    }
 
-    resultName.innerHTML = selectedActivity.name;
-    resultCost.innerHTML = "かかるお金: " + selectedActivity.cost;
-    resultEffort.innerHTML = "手間: " + selectedActivity.effort;
-  }
+    isLoading = false; // ★ 結果表示後にフラグを false に戻す ★
+  }, 1500);
+  // ▲▲▲ ローディング処理終了 ▲▲▲
 });
 
 // --- リセットボタンがクリックされたときの処理 ---
 resetButton.addEventListener("click", () => {
-  // 1. ★ 「手間」のチェックボックスをすべて【チェックする】に変更 ★
+  // 1. 「手間」のチェックボックスをすべてチェックする
   const allEffortCheckboxes = document.querySelectorAll('input[name="effort"]');
   allEffortCheckboxes.forEach((checkbox) => {
-    checkbox.checked = true; // false から true に変更
+    checkbox.checked = true;
   });
 
-  // 2. ★ スライダーを【初期値（0円〜一万円以上）】に設定 ★
-  const minResetIndex = 0; // "0円" のインデックス
-  const maxResetIndex = maxIndex; // "一万円以上" のインデックス (costLabels.length - 1 と同じ)
+  // 2. スライダーを【初期値（0円〜一万円以上）】に設定
+  const minResetIndex = 0;
+  const maxResetIndex = maxIndex;
 
-  // スライダーの値をインデックス 0 と maxIndex に設定
   lowerSlider.value = minResetIndex;
   upperSlider.value = maxResetIndex;
 
-  // 表示を更新
   updateSliderDisplay(minResetIndex, maxResetIndex);
 
   // 3. 結果表示もリセットする
-  resultName.innerHTML = "ここに遊びの名前";
-  resultCost.innerHTML = "ここに かかるお金";
-  resultEffort.innerHTML = "ここに 手間";
+  resultName.innerHTML = "ここに結果が表示されます"; // ★ 初期テキストに戻す
+  resultCost.innerHTML = "";
+  resultEffort.innerHTML = "";
 });

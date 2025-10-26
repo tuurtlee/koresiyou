@@ -1,6 +1,7 @@
 /* ページ全体の基本設定 */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans CJK JP", "Yu Gothic", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Hiragino Sans", "Noto Sans CJK JP", "Yu Gothic", sans-serif;
   background-color: #f4f7f6;
   display: flex;
   flex-direction: column;
@@ -13,57 +14,104 @@ body {
 /* ヘッダー画像の設定 */
 .site-header {
   width: 100%;
-  /* text-align: center; */
-  margin-bottom: 20px; /* フィルターとの間に隙間を作る */
-  overflow: hidden; /* ★ 枠からはみ出た部分を非表示（トリミング）にする */
-
-  display: flex; /* Flexboxを有効化 */
-  justify-content: center; /* 水平方向の中央揃え */
-  align-items: center; /* (任意) 垂直方向も中央揃えにする場合 */
+  margin-bottom: 30px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-image {
-  max-width: 600px; /* 画像が大きくなりすぎないように最大幅を設定 */
+  max-width: 600px;
   width: 110%;
-  text-align: center; /* 画像を中央揃えにする */
+  text-align: center;
   object-fit: cover;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
-/* 提案ボタン */
+/* 提案ボタン（ネオモフィズム風スタイル）*/
 #suggest-button {
-  background-color: #007bff;
-  color: white;
-  font-size: 1.2rem;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 50px;
+  box-sizing: border-box;
+  background: #fff;
+  position: relative;
+  text-decoration: none;
+  border-radius: 25px;
+  margin-top: 20px;
 }
-#suggest-button:hover {
-  background-color: #0056b3;
+#suggest-button #suggest-button-span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: #fff;
+  box-sizing: border-box;
+  color: #333;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  box-shadow: 0px 5px 12px #cad4e2, -6px -6px 12px #fff;
+  border-radius: 25px;
+  position: absolute;
+  top: -5px;
+  left: 0;
+  transition-duration: 0.2s;
+}
+
+#suggest-button:hover #suggest-button-span {
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 4px #cad4e2, -2px -2px 4px #fff;
 }
 
 /* リセットボタン */
 .secondary-button {
-  background-color: #6c757d;
-  color: white;
-  font-size: 1rem;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
+  /* 位置指定は変更なし */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  /* ★ 以下のスタイルを変更/削除 ★ */
+  background-color: transparent; /* 背景色を透明にする */
+  border: none; /* 枠線を削除 */
+  padding: 5px; /* アイコンをきれいに見せるためのパディング */
+  border-radius: 50%; /* 少し丸くしてアイコンに合わせる */
+  width: 30px; /* ★ ボタン全体の幅をアイコンに合わせて固定 */
+  height: 30px; /* ★ ボタン全体の高さをアイコンに合わせて固定 */
+
+  /* 中央揃えのために追加 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   cursor: pointer;
   transition: background-color 0.2s;
-  margin-top: 10px;
+  /* font-size や color はアイコンには不要なので削除 */
 }
 .secondary-button:hover {
-  background-color: #5a6268;
+  background-color: rgba(0, 0, 0, 0.1); /* ホバー時に薄い背景色を付ける */
+}
+
+/* ★ リセットアイコンのスタイルを追加 ★ */
+.reset-icon {
+  width: 20px; /* アイコンのサイズを調整 */
+  height: 20px;
+  vertical-align: middle; /* 上下中央揃え */
+  filter: invert(
+    30%
+  ); /* ★ 暗いアイコンを少し明るく、または色調を調整したい場合 */
+  /* 例: invert(100%) で白くなる */
 }
 
 /* 結果表示エリア全体 */
 #result-area {
-  display: none;
+  position: relative; /* ★ 画像の位置指定の基準にする */
+  opacity: 1;
+  visibility: visible;
   margin-top: 30px;
   margin-bottom: 30px;
   padding: 20px;
@@ -73,6 +121,7 @@ body {
   width: 80%;
   max-width: 500px;
   text-align: center;
+  overflow: hidden; /* ★ はみ出る部分を隠す (必要であれば) */
 }
 #result-area p {
   font-size: 1.1rem;
@@ -85,8 +134,22 @@ body {
   color: #000;
 }
 
+/* ★ 結果表示エリアのフッター画像スタイル ★ */
+.result-area-footer-image {
+  position: absolute; /* 親要素(#result-area)を基準に配置 */
+  bottom: 5px; /* 下端から少しはみ出すように調整 */
+  right: 5px; /* 右端から少しはみ出すように調整 */
+  width: 100px; /* 画像の幅を調整 */
+  height: auto; /* 高さは自動調整 */
+  opacity: 0.3; /* 透明度を上げて背景のようにする */
+  pointer-events: none; /* 画像をクリックできないようにする */
+  z-index: 0; /* 他のコンテンツの下に配置 */
+}
+
 /* フィルターエリア */
 .filters-container {
+  position: relative; /* ★ ボタンの位置指定の基準にする */
+  padding-top: 40px; /* ★ ボタンを置くスペースを確保 */
   display: flex;
   gap: 20px;
   margin-bottom: 20px;
@@ -121,40 +184,29 @@ fieldset label {
 
 .slider-values {
   display: flex;
-  justify-content: space-between; /* アイテム間のスペースを最大にする */
-  align-items: center; /* 垂直方向中央に揃える */
+  justify-content: space-between;
+  align-items: center;
   margin-top: 25px;
   font-size: 0.9rem;
   color: #333;
 }
-
-/* 値表示内の各 span 要素 */
 .slider-values span {
-  /* text-align で寄せる */
   flex-basis: 48%;
 }
-
-/* 下限値の span (#lower-value) */
 #lower-value {
-  text-align: right; /* 左寄せ */
-  /* ★ 右側にネガティブマージンを設定し、「〜」に近づける */
+  text-align: right;
   margin-left: -10px;
 }
-
-/* 上限値の span (#upper-value) */
 #upper-value {
-  text-align: left; /* 右寄せ */
-  /* ★ 左側にネガティブマージンを設定し、「〜」に近づける */
+  text-align: left;
   margin-right: -10px;
 }
-
-/* 「〜」を表示する span (IDがない2番目の要素) */
 .slider-values span:nth-child(2) {
-  text-align: center; /* 中央寄せ */
-  flex-basis: auto; /* 幅をテキスト幅に合わせる */
+  text-align: center;
+  flex-basis: auto;
   flex-grow: 0;
   flex-shrink: 0;
-  width: 20px; /* 幅を固定して、ネガティブマージンで隠されないようにする */
+  width: 20px;
 }
 
 .slider {
@@ -189,33 +241,31 @@ fieldset label {
   z-index: 2; /* 上側 */
 }
 
-/* ▼▼▼ 下限値 (#lower-slider) の Thumb スタイル (Chrome系) ▼▼▼ */
+/* 下限値 (#lower-slider) の Thumb スタイル (Chrome系) */
 #lower-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 16px;
   height: 16px;
-  margin-top: -6px; /* Thumb の位置を調整 */
+  margin-top: -6px;
   border-radius: 50%;
   background: #fff;
-  border: 2px solid var(--range-color); /* 元の青い枠線 */
+  border: 2px solid var(--range-color);
   cursor: pointer;
   pointer-events: auto;
   position: relative;
 }
-
-/* ▼▼▼ 下限値 (#lower-slider) の Thumb スタイル (Firefox) ▼▼▼ */
+/* 下限値 (#lower-slider) の Thumb スタイル (Firefox) */
 #lower-slider::-moz-range-thumb {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: #fff;
-  border: 2px solid var(--range-color); /* 元の青い枠線 */
+  border: 2px solid var(--range-color);
   cursor: pointer;
   pointer-events: auto;
 }
-
-/* ▼▼▼ 上限値 (#upper-slider) の Thumb スタイル (Chrome系) - 元のスタイル ▼▼▼ */
+/* 上限値 (#upper-slider) の Thumb スタイル (Chrome系) */
 #upper-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -223,19 +273,18 @@ fieldset label {
   height: 16px;
   border-radius: 50%;
   background: #fff;
-  border: 2px solid var(--range-color); /* 元の青い枠線 */
+  border: 2px solid var(--range-color);
   cursor: pointer;
   pointer-events: auto;
   position: relative;
 }
-
-/* ▼▼▼ 上限値 (#upper-slider) の Thumb スタイル (Firefox) - 元のスタイル ▼▼▼ */
+/* 上限値 (#upper-slider) の Thumb スタイル (Firefox) */
 #upper-slider::-moz-range-thumb {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: #fff;
-  border: 2px solid var(--range-color); /* 元の青い枠線 */
+  border: 2px solid var(--range-color);
   cursor: pointer;
   pointer-events: auto;
 }
@@ -243,10 +292,17 @@ fieldset label {
 /* トラック（背景）のスタイル (Chrome, Safari) */
 #lower-slider::-webkit-slider-runnable-track {
   height: 4px;
-  background: linear-gradient(to right, var(--track-color) 0%, var(--track-color) var(--lower-val-percent), var(--range-color) var(--lower-val-percent), var(--range-color) var(--upper-val-percent), var(--track-color) var(--upper-val-percent), var(--track-color) 100%);
+  background: linear-gradient(
+    to right,
+    var(--track-color) 0%,
+    var(--track-color) var(--lower-val-percent),
+    var(--range-color) var(--lower-val-percent),
+    var(--range-color) var(--upper-val-percent),
+    var(--track-color) var(--upper-val-percent),
+    var(--track-color) 100%
+  );
   border-radius: 2px;
 }
-
 #upper-slider::-webkit-slider-runnable-track {
   background: none;
 }
@@ -266,10 +322,63 @@ fieldset label {
   background: none;
 }
 
+/* --- ローディングアニメーション --- */
+.loader-container {
+  display: none;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.dot-overtaking {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: transparent;
+  color: hsl(0deg, 0%, 50%);
+  margin: -1px auto;
+  box-shadow: 0 -20px 0 0;
+  filter: blur(1px);
+  animation: dot-overtaking 2s infinite cubic-bezier(0.2, 0.6, 0.8, 0.2);
+}
+.dot-overtaking::before,
+.dot-overtaking::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: transparent;
+  color: inherit;
+  box-shadow: 0 -20px 0 0;
+  filter: blur(1px);
+}
+.dot-overtaking::before {
+  animation: dot-overtaking 2s infinite cubic-bezier(0.2, 0.6, 0.8, 0.2);
+  animation-delay: 0.3s;
+}
+.dot-overtaking::after {
+  animation: dot-overtaking 2s infinite cubic-bezier(0.2, 0.6, 0.8, 0.2);
+  animation-delay: 0.6s;
+}
+
+@keyframes dot-overtaking {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+/* --- ローディングアニメーション終了 --- */
+
 /* --- スマートフォン対応 (メディアクエリ) --- */
 @media (max-width: 768px) {
   body {
-    /* min-height: 100vh; */
+    min-height: 100vh;
     justify-content: center;
     padding: 20px 0;
   }
@@ -277,6 +386,7 @@ fieldset label {
     flex-direction: column;
     width: 90%;
     gap: 15px;
+    padding-top: 50px; /* スマホではボタン用スペースを少し広げる */
   }
   fieldset {
     min-width: auto;
@@ -293,8 +403,21 @@ fieldset label {
     font-size: 1.5rem;
   }
 
+  .secondary-button {
+    top: 5px; /* スマホでの位置調整 */
+    right: 5px;
+  }
+
   #lower-slider::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, var(--track-color) 0%, var(--track-color) var(--lower-val-percent), var(--range-color) var(--lower-val-percent), var(--range-color) var(--upper-val-percent), var(--track-color) var(--upper-val-percent), var(--track-color) 100%);
+    background: linear-gradient(
+      to right,
+      var(--track-color) 0%,
+      var(--track-color) var(--lower-val-percent),
+      var(--range-color) var(--lower-val-percent),
+      var(--range-color) var(--upper-val-percent),
+      var(--track-color) var(--upper-val-percent),
+      var(--track-color) 100%
+    );
   }
   #upper-slider::-webkit-slider-runnable-track {
     background: none;

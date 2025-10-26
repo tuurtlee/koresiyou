@@ -7,7 +7,11 @@
 
     <link rel="stylesheet" href="style.css" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon-180x180.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./apple-touch-icon-180x180.png"
+    />
     <link rel="icon" type="image/x-icon" href="./favicon.ico" />
   </head>
   <body>
@@ -19,15 +23,30 @@
       <fieldset>
         <legend>手間</legend>
         <div>
-          <input type="checkbox" id="effort1" name="effort" value="すぐできる" />
+          <input
+            type="checkbox"
+            id="effort1"
+            name="effort"
+            value="すぐできる"
+          />
           <label for="effort1">すぐできる</label>
         </div>
         <div>
-          <input type="checkbox" id="effort2" name="effort" value="半日かかる" />
+          <input
+            type="checkbox"
+            id="effort2"
+            name="effort"
+            value="半日かかる"
+          />
           <label for="effort2">半日かかる</label>
         </div>
         <div>
-          <input type="checkbox" id="effort3" name="effort" value="一日かかる" />
+          <input
+            type="checkbox"
+            id="effort3"
+            name="effort"
+            value="一日かかる"
+          />
           <label for="effort3">一日かかる</label>
         </div>
       </fieldset>
@@ -46,16 +65,25 @@
           <span id="upper-value">一万円以上</span>
         </div>
       </fieldset>
+
+      <button id="reset-button" class="secondary-button">
+        <img src="reset_icon.png" alt="リセット" class="reset-icon" />
+      </button>
     </div>
 
     <div id="result-area">
-      <p id="result-name">ここに遊びの名前</p>
-      <p id="result-cost">ここに かかるお金</p>
-      <p id="result-effort">ここに 手間</p>
+      <div class="loader-container" id="loader">
+        <div class="dot-overtaking"></div>
+      </div>
+      <p id="result-name">ここに結果が表示されます</p>
+      <p id="result-cost"></p>
+      <p id="result-effort"></p>
+      <img src="hedder.png" alt="" class="result-area-footer-image" />
     </div>
 
-    <button id="suggest-button">コレしよ！</button>
-    <button id="reset-button" class="secondary-button">フィルターをリセット</button>
+    <a href="#" id="suggest-button" class="btn_10">
+      <span id="suggest-button-span">コレしよ！</span>
+    </a>
 
     <script src="script.js"></script>
   </body>
