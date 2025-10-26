@@ -4,7 +4,8 @@ const resultName = document.getElementById("result-name");
 const resultCost = document.getElementById("result-cost");
 const resultEffort = document.getElementById("result-effort");
 const resetButton = document.getElementById("reset-button");
-const loader = document.getElementById("loader"); // ローダー要素を取得
+const loader = document.getElementById("loader");
+// resultNameLine の取得を削除
 
 // --- デュアルスライダー要素 ---
 const sliderContainer = document.getElementById("cost-slider-container");
@@ -122,18 +123,23 @@ suggestButton.addEventListener("click", (event) => {
   resultCost.innerHTML = "";
   resultEffort.innerHTML = "";
   loader.style.display = "block";
+  resultArea.classList.add("loading"); // loadingクラスを追加 (CSSで鉤括弧を隠す用)
 
   // 2. ローディング中はボタンを無効化 & フラグを立てる
   suggestButton.disabled = true;
   resetButton.disabled = true;
-  isLoading = true; // ★ フラグを true に設定 ★
+  isLoading = true;
 
   // 3. アニメーションを待つ (例: 1500ms = 1.5秒)
+  const randomDelay = 2000 + Math.floor(Math.random() * 1001); // 2000〜3000の整数を生成
+  console.log("遅延時間:", randomDelay, "ms");
+
   setTimeout(() => {
     // 4. ローダーを非表示 & ボタンを有効化
     loader.style.display = "none";
     suggestButton.disabled = false;
     resetButton.disabled = false;
+    resultArea.classList.remove("loading"); // loadingクラスを削除
 
     // 5. 絞り込みを実行して結果を表示 (既存のロジック)
     const checkedEffortBoxes = document.querySelectorAll(
@@ -171,7 +177,7 @@ suggestButton.addEventListener("click", (event) => {
     }
 
     isLoading = false; // ★ 結果表示後にフラグを false に戻す ★
-  }, 1500);
+  }, randomDelay);
   // ▲▲▲ ローディング処理終了 ▲▲▲
 });
 

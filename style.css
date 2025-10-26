@@ -70,27 +70,20 @@ body {
 
 /* リセットボタン */
 .secondary-button {
-  /* 位置指定は変更なし */
   position: absolute;
   top: 10px;
   right: 10px;
-
-  /* ★ 以下のスタイルを変更/削除 ★ */
-  background-color: transparent; /* 背景色を透明にする */
-  border: none; /* 枠線を削除 */
-  padding: 5px; /* アイコンをきれいに見せるためのパディング */
-  border-radius: 50%; /* 少し丸くしてアイコンに合わせる */
-  width: 30px; /* ★ ボタン全体の幅をアイコンに合わせて固定 */
-  height: 30px; /* ★ ボタン全体の高さをアイコンに合わせて固定 */
-
-  /* 中央揃えのために追加 */
+  background-color: transparent;
+  border: none;
+  padding: 5px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
   transition: background-color 0.2s;
-  /* font-size や color はアイコンには不要なので削除 */
 }
 .secondary-button:hover {
   background-color: rgba(0, 0, 0, 0.1); /* ホバー時に薄い背景色を付ける */
@@ -98,40 +91,88 @@ body {
 
 /* ★ リセットアイコンのスタイルを追加 ★ */
 .reset-icon {
-  width: 20px; /* アイコンのサイズを調整 */
+  width: 20px;
   height: 20px;
-  vertical-align: middle; /* 上下中央揃え */
-  filter: invert(
-    30%
-  ); /* ★ 暗いアイコンを少し明るく、または色調を調整したい場合 */
-  /* 例: invert(100%) で白くなる */
+  vertical-align: middle;
+  filter: invert(30%);
 }
 
 /* 結果表示エリア全体 */
 #result-area {
-  position: relative; /* ★ 画像の位置指定の基準にする */
+  position: relative; /* 画像と鉤括弧の位置指定の基準にする */
   opacity: 1;
   visibility: visible;
   margin-top: 30px;
   margin-bottom: 30px;
   padding: 20px;
   background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 80%;
   max-width: 500px;
   text-align: center;
-  overflow: hidden; /* ★ はみ出る部分を隠す (必要であれば) */
+  overflow: hidden;
 }
+
+/* 結果コンテンツコンテナ */
+.result-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* 結果の各テキスト要素 (<p>) の共通スタイル */
 #result-area p {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #555;
-  margin: 10px 0;
+  margin: 2px 0; /* ★ 上下の余白 */
+  position: relative; /* z-index用 */
+  z-index: 1;
 }
+
+/* 遊びの名前 (<p id="result-name">) */
 #result-area #result-name {
   font-size: 1.8rem;
+  letter-spacing: 0.1rem;
   font-weight: bold;
   color: #000;
+  position: relative; /* ★ 疑似要素の基準 */
+  display: inline-block; /* ★ 疑似要素を正しく含むため */
+  padding: 0 1.5em; /* ★ 左右に鉤括弧用のスペースを確保 */
+  margin: 10px 0; /* 上下の余白 */
+  line-height: 1.4; /* ★ 行の高さを調整 */
+}
+
+/* ★ 鉤括弧の疑似要素スタイル ★ */
+#result-area #result-name::before {
+  content: "「";
+  position: absolute;
+  top: 0; /* テキストブロックの上端 */
+  left: 0; /* テキストブロックの左端 (padding の内側) */
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ccc;
+  opacity: 0.7;
+  z-index: 0;
+  line-height: 1;
+}
+
+#result-area #result-name::after {
+  content: "」";
+  position: absolute;
+  bottom: 0; /* テキストブロックの下端 */
+  right: 0; /* テキストブロックの右端 (padding の内側) */
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ccc;
+  opacity: 0.7;
+  z-index: 0;
+  line-height: 1;
+}
+
+/* ★ ローディング中に鉤括弧を隠すスタイル ★ */
+#result-area.loading #result-name::before,
+#result-area.loading #result-name::after {
+  display: none;
 }
 
 /* ★ 結果表示エリアのフッター画像スタイル ★ */
@@ -325,7 +366,7 @@ fieldset label {
 /* --- ローディングアニメーション --- */
 .loader-container {
   display: none;
-  margin: 20px 0;
+  margin: 75px 0px 25px 0;
   text-align: center;
 }
 
